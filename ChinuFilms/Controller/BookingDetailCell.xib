@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="98" id="KGk-i7-Jjw" customClass="BookingDetailCell" customModule="SanskarEP" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="346" height="98"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="346" height="98"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FBO-NU-ktR" customClass="RoundUIView" customModule="SanskarEP" customModuleProvider="target">
+                        <rect key="frame" x="5" y="5" width="336" height="88"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="kBE-ZS-ap5">
+                                <rect key="frame" x="8" y="8" width="82" height="72"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="82" id="svi-bb-ajJ"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vmt-vv-1PC">
+                                <rect key="frame" x="98" y="33" width="230" height="26"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="26" id="Y7F-Vi-rgQ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron.forward.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="9RJ-AE-d3j">
+                                <rect key="frame" x="298" y="34" width="30" height="28.666666666666671"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="Tug-Bm-mdf"/>
+                                    <constraint firstAttribute="width" constant="30" id="oPh-g5-JQC"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="9RJ-AE-d3j" firstAttribute="top" secondItem="FBO-NU-ktR" secondAttribute="top" constant="33" id="076-Aa-Wb7"/>
+                            <constraint firstItem="kBE-ZS-ap5" firstAttribute="top" secondItem="FBO-NU-ktR" secondAttribute="top" constant="8" id="4GC-8l-NTl"/>
+                            <constraint firstAttribute="bottom" secondItem="kBE-ZS-ap5" secondAttribute="bottom" constant="8" id="LEo-i1-ysF"/>
+                            <constraint firstItem="Vmt-vv-1PC" firstAttribute="top" secondItem="FBO-NU-ktR" secondAttribute="top" constant="33" id="YMo-eb-YQ2"/>
+                            <constraint firstAttribute="trailing" secondItem="Vmt-vv-1PC" secondAttribute="trailing" constant="8" id="kF7-up-UOU"/>
+                            <constraint firstItem="Vmt-vv-1PC" firstAttribute="leading" secondItem="kBE-ZS-ap5" secondAttribute="trailing" constant="8" id="wKV-uY-pvY"/>
+                            <constraint firstItem="kBE-ZS-ap5" firstAttribute="leading" secondItem="FBO-NU-ktR" secondAttribute="leading" constant="8" id="x9O-6E-S10"/>
+                            <constraint firstAttribute="trailing" secondItem="9RJ-AE-d3j" secondAttribute="trailing" constant="8" id="yec-VR-bna"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="shadow" value="YES"/>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="10"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <constraints>
+                    <constraint firstItem="FBO-NU-ktR" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="BDm-I9-hln"/>
+                    <constraint firstItem="FBO-NU-ktR" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="dhL-Kc-PEf"/>
+                    <constraint firstAttribute="bottom" secondItem="FBO-NU-ktR" secondAttribute="bottom" constant="5" id="pUF-ZR-yfh"/>
+                    <constraint firstAttribute="trailing" secondItem="FBO-NU-ktR" secondAttribute="trailing" constant="5" id="rfu-PG-gUi"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <connections>
+                <outlet property="Label" destination="Vmt-vv-1PC" id="Ug8-Mj-jJW"/>
+                <outlet property="imageview" destination="kBE-ZS-ap5" id="4OD-BV-ywr"/>
+            </connections>
+            <point key="canvasLocation" x="161.83206106870227" y="-11.267605633802818"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="chevron.forward.circle.fill" catalog="system" width="128" height="123"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
