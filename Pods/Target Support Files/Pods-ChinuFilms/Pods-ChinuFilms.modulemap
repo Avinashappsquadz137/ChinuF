@@ -1,0 +1,6 @@
+framework module Pods_ChinuFilms {
+  umbrella header "Pods-ChinuFilms-umbrella.h"
+
+  export *
+  module * { export * }
+}
