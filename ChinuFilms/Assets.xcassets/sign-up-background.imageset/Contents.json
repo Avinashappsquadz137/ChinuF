@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "sign-up-background.png",
+      "filename" : "image_2025.06.23_11-10-29.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "sign-up-background-1.png",
+      "filename" : "image_2025.06.23_11-10-29@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "sign-up-background-2.png",
+      "filename" : "image_2025.06.23_11-10-29@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
