@@ -70,7 +70,7 @@ class NewHomeVC: UIViewController  {
     @IBOutlet weak var detailcollection: UICollectionView!
     @IBOutlet weak var deplbl: UILabel!
     @IBOutlet weak var newStatuslbl: UILabel!
-    
+    @IBOutlet weak var imagelogo: UIImageView!
     
     var selectedDate = Date()
     var totalSquares = [String]()
@@ -159,7 +159,7 @@ class NewHomeVC: UIViewController  {
         
         dotbtn.isHidden = false
      
-  
+        imagelogo.layer.cornerRadius = 10 
         detailview.isHidden = true
         bookingview.isHidden = true
         eventview.layer.cornerRadius = 8

@@ -20,10 +20,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg" translatesAutoresizingMaskIntoConstraints="NO" id="Tg3-Z5-Lut">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="backgroundimage" translatesAutoresizingMaskIntoConstraints="NO" id="Tg3-Z5-Lut">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" red="0.70196078429999997" green="0.14901960780000001" blue="0.12549019610000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="FuN-7n-kpn">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chinulogo" translatesAutoresizingMaskIntoConstraints="NO" id="FuN-7n-kpn">
                                 <rect key="frame" x="210" y="30" width="100" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="7rc-dy-FqV"/>
@@ -246,14 +247,16 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" title="Forget Pin ? "/>
+                                <state key="normal" title="Forget Pin ? ">
+                                    <color key="titleColor" red="0.70196078429999997" green="0.14901960780000001" blue="0.12549019610000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="forgetPassBtnPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="NNL-AD-xnv"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PZq-vx-Fh3">
-                                <rect key="frame" x="20" y="496" width="280" height="40"/>
-                                <color key="backgroundColor" red="0.70196078429999997" green="0.14901960780000001" blue="0.12549019610000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <rect key="frame" x="20" y="506" width="280" height="40"/>
+                                <color key="backgroundColor" name="CustomOrange"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="280" id="7YA-l3-v5v"/>
                                     <constraint firstAttribute="height" constant="40" id="KFb-ny-sb6"/>
@@ -268,10 +271,10 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mn3-YW-VgO">
-                                <rect key="frame" x="20" y="436" width="280" height="40"/>
-                                <color key="backgroundColor" red="0.70196078429999997" green="0.14901960780000001" blue="0.12549019610000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <rect key="frame" x="20" y="436" width="280" height="50"/>
+                                <color key="backgroundColor" red="0.70196078431372544" green="0.14901960784313725" blue="0.12549019607843137" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="0uD-fk-bI8"/>
+                                    <constraint firstAttribute="height" constant="50" id="0uD-fk-bI8"/>
                                     <constraint firstAttribute="width" constant="280" id="rfY-XQ-Ljo"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
@@ -311,6 +314,7 @@
                     <navigationItem key="navigationItem" id="5fW-33-CHT"/>
                     <connections>
                         <outlet property="Registerbtn" destination="PZq-vx-Fh3" id="NlF-bg-Kwc"/>
+                        <outlet property="image" destination="FuN-7n-kpn" id="PV6-GN-wt2"/>
                         <outlet property="loginBtn" destination="mn3-YW-VgO" id="QFC-CK-afO"/>
                         <outlet property="mobileTxtF" destination="a06-8o-e7c" id="eQ5-h3-08o"/>
                         <outlet property="openLbl" destination="S3V-Vx-eSZ" id="m0l-xf-bk7"/>
@@ -333,10 +337,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg" translatesAutoresizingMaskIntoConstraints="NO" id="8AT-HA-muw">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="backgroundimage" translatesAutoresizingMaskIntoConstraints="NO" id="8AT-HA-muw">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="EQw-z6-35d">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chinulogo" translatesAutoresizingMaskIntoConstraints="NO" id="EQw-z6-35d">
                                 <rect key="frame" x="210" y="10" width="100" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="SEh-1z-bHR"/>
@@ -362,7 +366,7 @@
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o2U-gM-0i0" customClass="RoundUIButton" customModule="ChinuFilms" customModuleProvider="target">
                                 <rect key="frame" x="20" y="330" width="280" height="40"/>
-                                <color key="backgroundColor" red="0.70196078429999997" green="0.14901960780000001" blue="0.12549019610000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.70196078431372544" green="0.14901960784313725" blue="0.12549019607843137" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="Ym7-cD-d9S"/>
                                 </constraints>
@@ -402,6 +406,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="image" destination="EQw-z6-35d" id="Jmg-ZF-mOS"/>
                         <outlet property="mobileTxt" destination="KCc-ul-h20" id="yuM-us-pdm"/>
                         <segue destination="2g2-dE-QTr" kind="showDetail" identifier="forgetToOtp" id="w3g-cJ-wUQ"/>
                     </connections>
@@ -418,10 +423,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg" translatesAutoresizingMaskIntoConstraints="NO" id="Azi-l9-fBd">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="backgroundimage" translatesAutoresizingMaskIntoConstraints="NO" id="Azi-l9-fBd">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="tCa-iU-6p2">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chinulogo" translatesAutoresizingMaskIntoConstraints="NO" id="tCa-iU-6p2">
                                 <rect key="frame" x="210" y="10" width="100" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="AhI-wc-l9G"/>
@@ -629,7 +634,7 @@
                                             </view>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NVd-re-C7B" customClass="RoundUIButton" customModule="ChinuFilms" customModuleProvider="target">
                                                 <rect key="frame" x="20" y="165" width="240" height="40"/>
-                                                <color key="backgroundColor" red="0.70196078429999997" green="0.14901960780000001" blue="0.12549019610000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="backgroundColor" red="0.70196078431372544" green="0.14901960784313725" blue="0.12549019607843137" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="woX-3e-oaq"/>
                                                 </constraints>
@@ -710,6 +715,7 @@
                         <outlet property="first1Txt" destination="g9L-bO-kbD" id="uxx-AU-Eh0"/>
                         <outlet property="firstTxt" destination="7Dc-EA-kb5" id="ClV-E6-emX"/>
                         <outlet property="fourhtTxt" destination="gcr-Rc-PPF" id="kyB-oh-I3d"/>
+                        <outlet property="image" destination="tCa-iU-6p2" id="F32-gS-K5P"/>
                         <outlet property="passHolder" destination="w3K-OJ-XvB" id="Qte-qW-mWN"/>
                         <outlet property="resetLbl" destination="XtW-D5-qF6" id="9ga-xW-zpT"/>
                         <outlet property="secondTxt" destination="Wkj-yS-HJW" id="l5L-MR-WXk"/>
@@ -728,10 +734,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg" translatesAutoresizingMaskIntoConstraints="NO" id="3bg-t6-CVF">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="backgroundimage" translatesAutoresizingMaskIntoConstraints="NO" id="3bg-t6-CVF">
                                 <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="0vL-6u-sow">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chinulogo" translatesAutoresizingMaskIntoConstraints="NO" id="0vL-6u-sow">
                                 <rect key="frame" x="210" y="30" width="100" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="SZ6-9x-Pbu"/>
@@ -803,7 +809,7 @@
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IGA-PD-yFZ">
                                         <rect key="frame" x="20" y="194" width="248" height="45"/>
-                                        <color key="backgroundColor" red="0.70196078429999997" green="0.14901960780000001" blue="0.12549019610000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" red="0.70196078431372544" green="0.14901960784313725" blue="0.12549019607843137" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="45" id="LDo-U4-4nF"/>
                                         </constraints>
@@ -1431,7 +1437,7 @@
                                                 </stackView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ph0-4F-iwu">
                                                     <rect key="frame" x="10" y="525" width="260" height="40"/>
-                                                    <color key="backgroundColor" red="0.70196078429999997" green="0.14901960780000001" blue="0.12549019610000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="backgroundColor" name="CustomOrange"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="40" id="ONQ-9J-R54"/>
                                                     </constraints>
@@ -2267,7 +2273,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rL6-Lg-yD3">
                                         <rect key="frame" x="15" y="105" width="280" height="45"/>
-                                        <color key="backgroundColor" red="0.70196078429999997" green="0.14901960780000001" blue="0.12549019610000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" name="CustomOrange"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="45" id="FYT-mN-lSO"/>
                                         </constraints>
@@ -3528,7 +3534,7 @@
                                     </textView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F4H-pe-sgK">
                                         <rect key="frame" x="10" y="298" width="260" height="40"/>
-                                        <color key="backgroundColor" red="0.70196078429999997" green="0.14901960780000001" blue="0.12549019610000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" name="CustomOrange"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="fl3-nM-Ehr"/>
                                         </constraints>
@@ -14405,15 +14411,15 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CY1-Xk-fhJ">
                                 <rect key="frame" x="0.0" y="15" width="320" height="60"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SanskarLogo" translatesAutoresizingMaskIntoConstraints="NO" id="3Du-et-ejC">
-                                        <rect key="frame" x="10" y="0.0" width="100" height="60"/>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="onelogo" translatesAutoresizingMaskIntoConstraints="NO" id="3Du-et-ejC">
+                                        <rect key="frame" x="10" y="0.0" width="70" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="Tg2-Bu-ux3"/>
-                                            <constraint firstAttribute="width" constant="100" id="Yfl-EP-gqO"/>
+                                            <constraint firstAttribute="width" constant="70" id="Yfl-EP-gqO"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" EP" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hkf-yw-rXu">
-                                        <rect key="frame" x="110" y="0.0" width="40" height="60"/>
+                                        <rect key="frame" x="80" y="0.0" width="40" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="40" id="HYb-iQ-Ggn"/>
                                         </constraints>
@@ -15231,6 +15237,7 @@
                         <outlet property="eventview" destination="rfy-4M-3JK" id="Y0k-OV-OID"/>
                         <outlet property="fowardbtnview" destination="HLg-0N-Mhe" id="rXt-7w-FGv"/>
                         <outlet property="fromdate" destination="iEJ-Qg-pHx" id="RkP-rX-Ihe"/>
+                        <outlet property="imagelogo" destination="3Du-et-ejC" id="pGI-NW-a6J"/>
                         <outlet property="maincalview" destination="xEQ-bd-Nk0" id="LKi-tl-v8R"/>
                         <outlet property="newStatuslbl" destination="w2A-oy-yNb" id="hGm-2W-191"/>
                         <outlet property="notificationlbl" destination="J7G-7U-430" id="sFP-kB-FQD"/>
@@ -16370,7 +16377,7 @@
                                     </stackView>
                                     <button opaque="NO" tag="27" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZPC-XS-UMV" customClass="RoundUIButton" customModule="ChinuFilms" customModuleProvider="target">
                                         <rect key="frame" x="20" y="335" width="240" height="40"/>
-                                        <color key="backgroundColor" red="0.70196078429999997" green="0.14901960780000001" blue="0.12549019610000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" name="CustomOrange"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="nBq-5R-hjo"/>
                                         </constraints>
@@ -18276,7 +18283,7 @@
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tCu-yA-fJU">
                                 <rect key="frame" x="8" y="654" width="304" height="40"/>
-                                <color key="backgroundColor" name="AccentColor"/>
+                                <color key="backgroundColor" red="0.70196078429999997" green="0.14901960780000001" blue="0.12549019610000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="gDZ-1I-6XF"/>
                                 </constraints>
@@ -23974,7 +23981,6 @@
     </scenes>
     <resources>
         <image name="Report" width="128" height="128"/>
-        <image name="SanskarLogo" width="146" height="146"/>
         <image name="Uncheck" width="128" height="128"/>
         <image name="arrow.backward" catalog="system" width="128" height="95"/>
         <image name="arrow.up.left.and.arrow.down.right" catalog="system" width="128" height="115"/>
@@ -23982,7 +23988,6 @@
         <image name="arrowtriangle.down" catalog="system" width="128" height="120"/>
         <image name="backgroundimage" width="393" height="852"/>
         <image name="bell.fill" catalog="system" width="123" height="128"/>
-        <image name="bg" width="213" height="378.5"/>
         <image name="birthday.cake.fill" catalog="system" width="128" height="115"/>
         <image name="calendar" width="128" height="128"/>
         <image name="calendar.badge.plus" catalog="system" width="128" height="109"/>
@@ -23991,6 +23996,7 @@
         <image name="chevron.backward" catalog="system" width="97" height="128"/>
         <image name="chevron.down" catalog="system" width="128" height="70"/>
         <image name="chevron.forward" catalog="system" width="97" height="128"/>
+        <image name="chinulogo" width="1352" height="1352"/>
         <image name="clear" catalog="system" width="128" height="114"/>
         <image name="dots icon" width="128" height="128"/>
         <image name="download" width="172" height="148"/>
@@ -24005,10 +24011,11 @@
         <image name="icon_qr_code" width="52" height="52"/>
         <image name="in" width="170.5" height="170.5"/>
         <image name="jjjj" width="200" height="200"/>
-        <image name="logo" width="146" height="146"/>
+        <image name="logo" width="41.5" height="39.5"/>
         <image name="magnifyingglass" catalog="system" width="128" height="117"/>
         <image name="multiply.circle.fill" catalog="system" width="128" height="123"/>
         <image name="oko" width="360" height="800"/>
+        <image name="onelogo" width="1352" height="1352"/>
         <image name="paperplane" catalog="system" width="128" height="119"/>
         <image name="person.circle.fill" catalog="system" width="128" height="123"/>
         <image name="play.circle" catalog="system" width="128" height="123"/>

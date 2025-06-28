@@ -1,17 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "bg.jpg",
+      "filename" : "WEBSITE_lOGO SQUARE_MODIFY CHINU FILM_27_06_25.jpg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "bg@2x.jpg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "bg@3x.jpg",
       "idiom" : "universal",
       "scale" : "3x"
     }

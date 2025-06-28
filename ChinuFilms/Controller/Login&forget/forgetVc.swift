@@ -10,14 +10,17 @@ import UIKit
 class forgetVc: UIViewController {
     
     @IBOutlet weak var mobileTxt: UITextField!
+    @IBOutlet weak var image: UIImageView!
     
     var otpModel: [String:Any]?
-
+   
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setup()
-
+        image.layer.cornerRadius = image.frame.size.width / 2
+        image.clipsToBounds = true
     }
     
     //MARK: - setup UI

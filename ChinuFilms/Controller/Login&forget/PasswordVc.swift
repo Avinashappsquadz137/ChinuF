@@ -24,7 +24,7 @@ class PasswordVc: UIViewController {
     @IBOutlet weak var Second1Txt: UITextField!
     @IBOutlet weak var Third1Txt: UITextField!
     @IBOutlet weak var Fourth1Txt: UITextField!
-    
+    @IBOutlet weak var image: UIImageView!
     
     var otpValue: String?
     var otpData: [String:Any]?
@@ -33,7 +33,8 @@ class PasswordVc: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        image.layer.cornerRadius = image.frame.size.width / 2
+            image.clipsToBounds = true
         setup()
         setUp()
     }

@@ -19,6 +19,8 @@ class LoginVc: UIViewController {
     //mark:- Button
     @IBOutlet weak var loginBtn: UIButton!
     @IBOutlet weak var Registerbtn: UIButton!
+    @IBOutlet weak var image: UIImageView!
+    
     
     //Mark: Variable
     var password: String?
@@ -27,13 +29,18 @@ class LoginVc: UIViewController {
         // Do any additional setup after loading the view.
         updateUI()
         navigationController?.isNavigationBarHidden = true
+        mobileTxtF.delegate = self
         Registerbtn.isHidden = true
+        
+        image.layer.cornerRadius = image.frame.size.width / 2
+            image.clipsToBounds = true
+       
     }
     
     //MARK: - Update UI
     
     func updateUI () {
-        loginBtn.layer.cornerRadius = 20
+        loginBtn.layer.cornerRadius = 10
         loginBtn.clipsToBounds = true
         Registerbtn.layer.cornerRadius = 20
         Registerbtn.clipsToBounds = true
@@ -41,7 +48,7 @@ class LoginVc: UIViewController {
         //Mark:- multi color text
         let stringValue = "Employee Portal"
         let attributedString: NSMutableAttributedString = NSMutableAttributedString(string: stringValue)
-        attributedString.setColorForText(textForAttribute: "Portal", withColor: UIColor.red)
+        attributedString.setColorForText(textForAttribute: "Portal", withColor: UIColor.systemBrown)
         openLbl.attributedText = attributedString
         passText1.delegate = self
         passText2.delegate = self
@@ -165,15 +172,34 @@ extension LoginVc: UITextFieldDelegate {
     }
 
     
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool  {
+//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool  {
+//        let currentCharacterCount = textField.text?.count ?? 0
+//        if (range.length + range.location > currentCharacterCount){
+//            return false
+//        }
+//        let newLength = currentCharacterCount + string.count - range.length
+//        return newLength <= 1
+////        return false
+//    }
+    
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        // Allow only numeric characters
+        let characterSet = CharacterSet.decimalDigits
+        if string.rangeOfCharacter(from: characterSet.inverted) != nil {
+            return false // Reject non-numeric characters
+        }
+        
+        // Limit the number of digits to 10
         let currentCharacterCount = textField.text?.count ?? 0
-        if (range.length + range.location > currentCharacterCount){
+        if (range.length + range.location > currentCharacterCount) {
             return false
         }
+        
         let newLength = currentCharacterCount + string.count - range.length
-        return newLength <= 1
-//        return false
+        return newLength <= 10 // Allow only up to 10 digits
     }
+
 }
 
 

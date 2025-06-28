@@ -15,6 +15,7 @@ class PunchHistoryOut: UIViewController {
     @IBOutlet weak var sendbtn: UIButton!
     @IBOutlet weak var Headrview: UIView!
     @IBOutlet weak var filtertableview: UITableView!
+ 
     
     
     let headers = ["Date", "In Time", "Out Time", "Location"]
@@ -324,9 +325,3 @@ extension PunchHistoryOut: UITableViewDelegate {
 }
 
 
-//**"Hi, my name is [Your Name], and I have 2.5 years of experience as an iOS developer.
-//I mainly work with Swift and SwiftUI to build iPhone apps. During my experience, I have worked on different kinds of apps, from small projects to larger ones, focusing on making them fast, user-friendly, and smooth.
-//
-//I have good experience with things like API integration, UI/UX improvements, and Apple’s frameworks like CoreData and UIKit. I enjoy solving coding problems and always try to keep learning new things about iOS development.
-//
-//Right now, I am looking for a new opportunity where I can use my skills, learn from my team, and grow as a developer. I’m excited to be here and would love to discuss how I can contribute to your team."**
