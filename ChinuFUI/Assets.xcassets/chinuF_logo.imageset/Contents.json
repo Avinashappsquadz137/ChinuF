@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "COLOR_WEBSITE_lOGO_SQUARE MODIFY CHINU FILM_27_06_25.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "COLOR_WEBSITE_lOGO_SQUARE MODIFY CHINU FILM_27_06_25@2x.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "COLOR_WEBSITE_lOGO_SQUARE MODIFY CHINU FILM_27_06_25@3x.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
