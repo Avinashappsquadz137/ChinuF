@@ -45,6 +45,7 @@ struct Events : Codable {
     let to_date : String?
     let req_date : String?
     let bDay : String?
+    let status : String?
     
     enum CodingKeys: String, CodingKey {
         
@@ -61,6 +62,7 @@ struct Events : Codable {
         case to_date = "to_date"
         case req_date = "req_date"
         case bDay = "BDay"
+        case status = "status"
     }
     
     init(from decoder: Decoder) throws {
@@ -84,6 +86,7 @@ struct Events : Codable {
         to_date = try values.decodeIfPresent(String.self, forKey: .to_date)
         req_date = try values.decodeIfPresent(String.self, forKey: .req_date)
         bDay = try values.decodeIfPresent(String.self, forKey: .bDay)
+        status = try values.decodeIfPresent(String.self, forKey: .status)
         
     }
     

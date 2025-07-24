@@ -35,6 +35,7 @@ struct Constant {
     static let imageURL                    = "https://ep.sanskargroup.in/uploads/"
     
     static let getlogin                    = "api_panel/login_app"
+    static let employeeMasterDetail        = "api_panel/employee_master_detail"
     static let monthWiseDetailApi          = "api_panel/get_month_wise_emp_detail"
     static let eventDetail                 = "api_panel/event_detail"
     static let sidebarapi                  = "api_panel/side_bar"

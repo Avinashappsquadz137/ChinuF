@@ -22,17 +22,18 @@ struct AllListView: View {
         VStack {
             SearchBars(text: $searchText)
             ScrollView {
-                LazyVGrid(columns: columns) {
+                LazyVGrid(columns: columns ,spacing: 8) {
                     ForEach(filteredReqType.indices, id: \.self) { index in
                         let item = filteredReqType[index]
                         NavigationLink(
                             destination: destinationView(for: item.id ?? 0)
                         ) {
                             CardView(item: item)
+                                .padding(3)
                         }
                     }
-                    .padding(3)
                 }
+                .padding(.horizontal)
             }
         }
         .onAppear {
@@ -52,7 +53,7 @@ struct AllListView: View {
             model: SideBarApi.self
         ) { result in
             DispatchQueue.main.async {
-                switch result { 
+                switch result {
                 case .success(let model):
                     if var data = model.data {
                         data = data.filter { $0.id != 4 }
@@ -61,7 +62,7 @@ struct AllListView: View {
                         self.reqType.insert(manualItem, at: 0)
                         let manualItem2 = SideBar(id: 101, name: "Calander")
                         self.reqType.insert(manualItem2, at: 1)
-                    } 
+                    }
                 case .failure(let error):
                     print("API Error: \(error)")
                 }

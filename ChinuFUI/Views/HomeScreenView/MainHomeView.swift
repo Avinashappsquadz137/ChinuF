@@ -17,6 +17,7 @@ struct MainHomeView: View {
     @State private var empCode: String = UserDefaultsManager.getEmpCode()
     @State private var PImg: String = UserDefaultsManager.getProfileImage()
     @StateObject private var calendarViewModel = MonthlyCalendarViewModel()
+    @StateObject private var homeMasterDetailVM = HomeMasterDetailViewModel()
     @State private var navigateNotification = false
     var body: some View {
         NavigationView {
@@ -53,6 +54,9 @@ struct MainHomeView: View {
                 }
                 .hidden()
             }
+        }
+        .onAppear {
+           // homeMasterDetailVM.getMasterDetail()
         }
         .navigationBarBackButtonHidden(true)
     }

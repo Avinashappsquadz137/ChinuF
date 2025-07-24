@@ -130,7 +130,8 @@ struct AdminInfoView: View {
 
     
     func leaveCell(detail: Events) -> some View {
-        NavigationLink(destination: LeaveDetailView(detail: detail)) {
+        let status = RequestStatus(code: detail.status)
+        return NavigationLink(destination: LeaveDetailView(detail: detail, detailStatus: status)) {
             HStack {
                 Text(detail.name ?? "Unknown")
                     .foregroundColor(.black)
@@ -173,38 +174,6 @@ struct AdminInfoView: View {
             .background(Color.white)
             .cornerRadius(12)
             .shadow(radius: 2)
-        }
-    }
-    
-    func check(status: String ) -> String {
-        
-        switch status {
-        case "A":
-            return " Approved"
-        case "R":
-            return " Pending"
-        case "XA":
-            return " Declined"
-        case "X":
-            return " Cancel"
-        default:
-            return ""
-        }
-    }
-    
-    func sColor(status: String ) -> UIColor {
-        
-        switch status {
-        case "A":
-            return .systemGreen
-        case "R":
-            return .systemBlue
-        case "XA":
-            return .systemRed
-        case "X":
-            return .systemPurple
-        default:
-            return .black
         }
     }
     

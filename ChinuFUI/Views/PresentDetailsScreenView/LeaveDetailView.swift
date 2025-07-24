@@ -8,6 +8,7 @@ import SwiftUI
 
 struct LeaveDetailView: View {
     let detail: Events
+    let detailStatus: RequestStatus
     @Environment(\.dismiss) private var dismiss
     @State private var isImageFullScreen = false
     @State private var showRejectRemarkSheet = false
@@ -30,10 +31,22 @@ struct LeaveDetailView: View {
                     }
                 
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("EMP Code: \(detail.emp_Code ?? "Unknown")")
+                    Text("EMP : \(detail.emp_Code ?? "Unknown")")
                         .font(.headline)
-                    Text("Dept: \(detail.dept ?? "No Dept")")
-                    Text("Leave Type: \(detail.leave_type ?? "No Leave Type")")
+                    if UserDefaultsManager.getCode() == "H" {
+                        HStack {
+                            Text("Status:")
+                            Text(detailStatus.displayText)
+                                .foregroundColor(detailStatus.color)
+                        }
+                        Text("Dept: \(detail.dept ?? "No Dept")")
+                    } else {
+                        Text("Status: ")
+                        Text(detailStatus.displayText)
+                            .foregroundColor(detailStatus.color)
+                    }
+
+                    Text("Leave : \(detail.leave_type ?? "No Leave Type")")
                     Text("From: \(detail.from_date ?? "N/A") To: \(detail.to_date ?? "N/A")")
                 }
                 
@@ -41,15 +54,19 @@ struct LeaveDetailView: View {
             Text("Reason for Leave: \(detail.reason ?? "Leave")")
             AttendanceGridView(detail: detail)
             HStack( spacing: 16 ) {
-                CustonButton(title: "Accept", backgroundColor: .green ,width: 100) {
-                    print("Accept button tapped!")
-                    if let reqID = detail.iD {
-                        getGrant([reqID], "granted")
+                if UserDefaultsManager.getCode() == "H" {
+                    if detail.status == "R" {
+                        CustonButton(title: "Accept", backgroundColor: .green ,width: 100) {
+                            print("Accept button tapped!")
+                            if let reqID = detail.iD {
+                                getGrant([reqID], "granted")
+                            }
+                        }
+                        CustonButton(title: "Reject", backgroundColor: .red ,width: 100) {
+                            print("Reject button tapped!")
+                            showRejectRemarkSheet = true
+                        }
                     }
-                }
-                CustonButton(title: "Reject", backgroundColor: .red ,width: 100) {
-                    print("Reject button tapped!")
-                    showRejectRemarkSheet = true
                 }
             }
             .frame(maxWidth: .infinity, alignment: .trailing)
@@ -167,6 +184,39 @@ struct LeaveDetailView: View {
                     print("API Error: \(error)")
                 }
             }
+        }
+    }
+}
+enum RequestStatus: String {
+    case requested = "R"
+    case approved = "A"
+    case cancelled = "X"
+    case unknown
+
+    init(code: String?) {
+        switch code {
+        case "R": self = .requested
+        case "A": self = .approved
+        case "X": self = .cancelled
+        default: self = .unknown
+        }
+    }
+
+    var displayText: String {
+        switch self {
+        case .requested: return "Pending"
+        case .approved: return "Approved"
+        case .cancelled: return "Cancelled"
+        case .unknown: return "Leave"
+        }
+    }
+
+    var color: Color {
+        switch self {
+        case .requested: return .red
+        case .approved: return .green
+        case .cancelled: return .red
+        case .unknown: return .gray
         }
     }
 }
