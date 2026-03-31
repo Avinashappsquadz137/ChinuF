@@ -34,6 +34,7 @@ struct LoginModel : Codable {
 
 struct Login : Codable {
     let empCode : String?
+    let companyId : Int?
     let name : String?
     let bDay : String?
     let emailID : String?
@@ -64,6 +65,7 @@ struct Login : Codable {
     enum CodingKeys: String, CodingKey {
 
         case empCode = "EmpCode"
+        case companyId = "CompanyId"
         case name = "Name"
         case bDay = "BDay"
         case emailID = "EmailID"
@@ -121,6 +123,13 @@ struct Login : Codable {
         booking_role_id = try values.decodeIfPresent(Int.self, forKey: .booking_role_id)
         pl_balance = try values.decodeIfPresent(String.self, forKey: .pl_balance)
         today_intime = try values.decodeIfPresent(String.self, forKey: .today_intime)
+        if let intValue = try? values.decodeIfPresent(Int.self, forKey: .companyId) {
+            companyId = intValue
+        } else if let stringValue = try? values.decodeIfPresent(String.self, forKey: .companyId) {
+            companyId = Int(stringValue)
+        } else {
+            companyId = nil
+        }
     }
 
 }

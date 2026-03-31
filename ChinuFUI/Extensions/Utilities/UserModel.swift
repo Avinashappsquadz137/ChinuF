@@ -14,6 +14,7 @@ class UserDefaultsManager {
     // MARK: - Keys
     private enum Keys {
         static let empCode = "EmpCode"
+        static let companyId = "CompanyId"
         static let name = "Name"
         static let birthday = "BDay"
         static let todayInTime = "today_intime"
@@ -52,6 +53,9 @@ class UserDefaultsManager {
     // MARK: - Getter Methods
     static func getEmpCode() -> String {
         UserDefaults.standard.string(forKey: Keys.empCode) ?? "" //493
+    }
+    static func getCompanyId() -> Int {
+        UserDefaults.standard.integer(forKey: Keys.companyId) //493
     }
 
     static func getName() -> String {
@@ -149,6 +153,10 @@ class UserDefaultsManager {
     static func setEmpCode(_ value: String) {
         UserDefaults.standard.set(value, forKey: Keys.empCode)
     }
+    static func setCompanyId(_ value: Int) {
+        print("Keys.companyId",Keys.companyId)
+        UserDefaults.standard.set(value, forKey: Keys.companyId)
+    }
 
     static func setName(_ value: String) {
         UserDefaults.standard.set(value, forKey: Keys.name)
@@ -245,6 +253,7 @@ class UserDefaultsManager {
 
     // MARK: - Save All Login Data
     static func saveUserData(from user: Login) {
+        setCompanyId(user.companyId ?? 0)
         setEmpCode(user.empCode ?? "")
         setName(user.name ?? "")
         setBirthday(user.bDay ?? "")
@@ -278,6 +287,7 @@ class UserDefaultsManager {
     // MARK: - Helper Methods
     static func removeUserData() {
         UserDefaults.standard.removeObject(forKey: Keys.empCode)
+        UserDefaults.standard.removeObject(forKey: Keys.companyId)
         UserDefaults.standard.removeObject(forKey: Keys.name)
         UserDefaults.standard.removeObject(forKey: Keys.birthday)
         UserDefaults.standard.removeObject(forKey: Keys.emailID)

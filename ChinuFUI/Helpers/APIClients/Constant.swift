@@ -34,6 +34,7 @@ struct Constant {
     static let BASEURL                     = ApiRequest.Url.serverURL
     static let imageURL                    = "https://ep.sanskargroup.in/uploads/"
     
+    static let getCompany                  = "api_panel/get_company"
     static let getlogin                    = "api_panel/login_app"
     static let employeeMasterDetail        = "api_panel/employee_master_detail"
     static let monthWiseDetailApi          = "api_panel/get_month_wise_emp_detail"

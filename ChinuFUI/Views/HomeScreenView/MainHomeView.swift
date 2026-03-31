@@ -16,6 +16,7 @@ struct MainHomeView: View {
     @State private var name: String = UserDefaultsManager.getName()
     @State private var empCode: String = UserDefaultsManager.getEmpCode()
     @State private var PImg: String = UserDefaultsManager.getProfileImage()
+    @State private var companyID: Int = 0
     @StateObject private var calendarViewModel = MonthlyCalendarViewModel()
     @StateObject private var homeMasterDetailVM = HomeMasterDetailViewModel()
     @State private var navigateNotification = false
@@ -23,8 +24,8 @@ struct MainHomeView: View {
         NavigationView {
             VStack(spacing: 0) {
                 MainNavigationBar(
-                    logoName: "chinuF_logo",
-                    projectName: "CF",
+                    logoName: companyID == 1 ? "chinuF_logo" : "Total_multi",
+                    projectName: companyID == 1 ? "CHINU FILMS" : "TOTAL MULTIMEDIA",
                     onSearchTapped: {
                         print("Search tapped")
                     },
@@ -56,7 +57,9 @@ struct MainHomeView: View {
             }
         }
         .onAppear {
-           // homeMasterDetailVM.getMasterDetail()
+            companyID = UserDefaultsManager.getCompanyId()
+            print("companyID", companyID)
+            // homeMasterDetailVM.getMasterDetail()
         }
         .navigationBarBackButtonHidden(true)
     }

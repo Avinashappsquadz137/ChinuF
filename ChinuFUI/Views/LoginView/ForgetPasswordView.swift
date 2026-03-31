@@ -218,6 +218,7 @@ struct ForgetPassword: View {
                             UserDefaultsManager.setEmailID(userData.emailID ?? "")
                             UserDefaultsManager.setContactNo(userData.cntNo ?? "")
                             UserDefaultsManager.setEmpCode(userData.empCode ?? "")
+                            UserDefaultsManager.setCompanyId(userData.companyId ?? 0)
                         }
                         
                     } else {

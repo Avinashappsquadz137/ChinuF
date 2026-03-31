@@ -44,7 +44,6 @@ struct AllListView: View {
     func fetchSidebarAPI() {
         var dict = [String: Any]()
         dict["EmpCode"] = "\(UserDefaultsManager.getEmpCode())"
-        dict["comp_id"] = "1"
         
         ApiClient.shared.callmethodMultipart(
             apiendpoint: Constant.sidebarapi,

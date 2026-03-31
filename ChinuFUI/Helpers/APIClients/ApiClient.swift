@@ -217,8 +217,9 @@ class ApiClient: NSObject {
     }
     
      func setHeader() -> HTTPHeaders {
+         let companyId = UserDefaults.standard.integer(forKey: "SelectedCompanyId")
          let headers: HTTPHeaders = [
-    
+            "comp-id": "\(companyId)"
            // "device_type": "2"
            ]
            

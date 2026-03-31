@@ -6,7 +6,7 @@
 //
 import Foundation
 import UIKit
-import SwiftUICore
+import SwiftUI
 
 var dayFormatter: DateFormatter {
     let formatter = DateFormatter()

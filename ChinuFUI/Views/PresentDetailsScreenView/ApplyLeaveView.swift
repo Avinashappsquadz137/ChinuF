@@ -10,76 +10,98 @@ import SwiftUI
 struct ApplyLeaveView: View {
     
     // MARK: - State Properties
-    @State private var selectedLeaveType = ""
-    @State private var fromDate = Date()
-    @State private var toDate = Date()
-    @State private var fromDayType = "Full Day"
-    @State private var toDayType = "Full Day"
+    @State private var selectedLeaveType = "Full"
+    @State private var fromDate = Calendar.current.startOfDay(for: Date())
+    @State private var toDate = Calendar.current.startOfDay(for: Date())
+    @State private var fromDayType = "Full"
+    @State private var toDayType = "Full"
     @State private var remarks = ""
     @State private var name: String = UserDefaultsManager.getName()
     @State private var empCode: String = UserDefaultsManager.getEmpCode()
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.dismiss) private var dismiss
     @State private var showToast = false
-    
-    @State private var leaveTypes = ["Full Day", "First Half Day", "Second Half Day", "Off", "WFH"]
-    
+    @State private var leaveTypes = ["Full", "Half","Comp off", "WFH"]
+    @State private var halfTypes = ["First Half", "Second Half"]
     
     var body: some View {
         
         ScrollView {
             VStack(alignment: .leading, spacing: 12) {
                 Group {
-                    Text("Employee")
-                        .font(.subheadline)
-                        .foregroundColor(.gray)
-                    Text("\(empCode) - \(name.uppercased())")
-                        .font(.body)
-                    
-                    Text("Applied Date")
-                        .font(.subheadline)
-                        .foregroundColor(.gray)
-                    Text(formattedDate(Date()))
-                        .font(.body)
-                }
-                Group {
                     Text("Select Leave Type")
                         .font(.caption)
                         .foregroundColor(.gray)
-                    Picker("Select Leave Type", selection: $selectedLeaveType) {
-                        Text("Select Leave Type").tag("")
-                        ForEach(leaveTypes, id: \.self) {
-                            Text($0)
+
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 12) {
+                            ForEach(leaveTypes, id: \.self) { type in
+                                Button(action: {
+                                    selectedLeaveType = type
+                                    switch type {
+                                    case "Full":
+                                        fromDayType = "Full"
+                                        toDayType = "Full"
+                                    case "Comp off":
+                                        fromDayType = "Comp Off"
+                                        toDayType = "Comp Off"
+                                    case "WFH":
+                                        fromDayType = "WFH"
+                                        toDayType = "WFH"
+                                    case "Half":
+                                        fromDayType = "First Half"
+                                        toDayType = "First Half"
+                                    default:
+                                        break
+                                    }
+                                }) {
+                                    Text(type)
+                                        .font(.subheadline)
+                                        .foregroundColor(selectedLeaveType == type ? .white : .blue)
+                                        .padding(.horizontal, 12)
+                                        .padding(.vertical, 8)
+                                        .background(selectedLeaveType == type ? Color.blue : Color.clear)
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 20)
+                                                .stroke(Color.blue, lineWidth: 1)
+                                        )
+                                        .cornerRadius(20)
+                                }
+                            }
+                        }
+                        .padding(.vertical, 5)
+                    }
+                    if selectedLeaveType == "Half" {
+                        Text("Select Half Day Type")
+                            .font(.caption)
+                            .foregroundColor(.gray)
+
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack(spacing: 12) {
+                                ForEach(halfTypes, id: \.self) { half in
+                                    Button(action: {
+                                        fromDayType = half
+                                        toDayType = half
+                                    }) {
+                                        Text(half)
+                                            .font(.subheadline)
+                                            .foregroundColor(fromDayType == half ? .white : .blue)
+                                            .padding(.horizontal, 12)
+                                            .padding(.vertical, 8)
+                                            .background(fromDayType == half ? Color.blue : Color.clear)
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 20)
+                                                    .stroke(Color.blue, lineWidth: 1)
+                                            )
+                                            .cornerRadius(20)
+                                    }
+                                }
+                            }
+                            .padding(.vertical, 5)
                         }
                     }
-                    .onChange(of: selectedLeaveType) { newValue in
-                        switch newValue {
-                        case "Full Day":
-                            fromDayType = "Full Day"
-                            toDayType = "Full Day"
-                        case "First Half Day":
-                            fromDayType = "First Half Day"
-                            toDayType = "First Half Day"
-                        case "Second Half Day":
-                            fromDayType = "Second Half Day"
-                            toDayType = "Second Half Day"
-                        case "Off":
-                            fromDayType = "Off"
-                            toDayType = "Off"
-                        case "WFH":
-                            fromDayType = "WFH"
-                            toDayType = "WFH"
-                        default:
-                            break
-                        }
-                    }
-                    .pickerStyle(MenuPickerStyle())
-                    .frame(maxWidth: .infinity)
-                    .padding(10)
-                    .background(Color(.systemGray6))
-                    .cornerRadius(10)
                 }
-                
+
                 Group {
                     Text("Leave Balance")
                         .font(.subheadline)
@@ -92,8 +114,19 @@ struct ApplyLeaveView: View {
                             Text("From Date")
                                 .font(.subheadline)
                                 .foregroundColor(.gray)
-                            DatePicker("", selection: $fromDate, displayedComponents: .date)
-                                .labelsHidden()
+                            DatePicker(
+                                "",
+                                selection: $fromDate,
+                                displayedComponents: .date
+                            )
+                            .labelsHidden()
+                            .onChange(of: fromDate) { newValue in
+                                fromDate = Calendar.current.startOfDay(for: newValue)
+                                
+                                if toDate < fromDate {
+                                    toDate = fromDate
+                                }
+                            }
                         }
                         
                         VStack(alignment: .leading) {
@@ -108,14 +141,22 @@ struct ApplyLeaveView: View {
                                 .cornerRadius(10)
                         }
                     }
-                    if !(selectedLeaveType == "First Half Day" || selectedLeaveType == "Second Half Day" || selectedLeaveType  == "Off") {
+                    if selectedLeaveType != "Half" {
                         HStack {
                             VStack(alignment: .leading) {
                                 Text("To Date")
                                     .font(.subheadline)
                                     .foregroundColor(.gray)
-                                DatePicker("", selection: $toDate, displayedComponents: .date)
-                                    .labelsHidden()
+                                DatePicker(
+                                    "",
+                                    selection: $toDate,
+                                    in: fromDate...,
+                                    displayedComponents: .date
+                                )
+                                .labelsHidden()
+                                .onChange(of: toDate) { newValue in
+                                    toDate = Calendar.current.startOfDay(for: newValue)
+                                }
                             }
                             
                             VStack(alignment: .leading) {
@@ -156,21 +197,21 @@ struct ApplyLeaveView: View {
             .padding()
             
         }
-        .overlay(showToast ? ToastView() : nil)
+        .overlay(ToastView())
         .navigationTitle("LEAVE")
         .navigationBarTitleDisplayMode(.inline)
     }
     func handleSubmit() {
-        if fromDayType == "Off" || toDayType == "Off" {
+        if fromDayType == "Comp Off" || toDayType == "Comp Off" {
             offdayRequest()
         } else if fromDayType == "WFH" || toDayType == "WFH" {
             wfHRequest()
-        } else if fromDayType == "Full Day" && toDayType == "Full Day" {
+        } else if fromDayType == "Full" && toDayType == "Full" {
             fullDayLeaveRequest()
         } else {
-            if fromDayType == "First Half Day" {
+            if fromDayType == "First Half" {
                 selectedLeaveType = "first half"
-            } else if fromDayType == "Second Half Day" {
+            } else if fromDayType == "Second Half" {
                 selectedLeaveType = "second half"
             } else {
                 selectedLeaveType = "half"
@@ -183,13 +224,14 @@ struct ApplyLeaveView: View {
         let dict: [String: Any] = [
             "EmpCode": empCode,
             "from_date": formattedDate(fromDate),
+            "to_date": formattedDate(toDate),
             "leave_res": remarks
         ]
         ApiClient.shared.callmethodMultipart(
             apiendpoint: Constant.dayOffRequest,
             method: .post,
             param: dict,
-            model: SideBarApi.self
+            model: GetSuccessMessage.self
         ) { result in
             DispatchQueue.main.async {
                 switch result {
@@ -197,15 +239,17 @@ struct ApplyLeaveView: View {
                     if model.status == true {
                         showToast = true
                         ToastManager.shared.show(message: model.message ?? "Fetched Successfully")
-                        print("Leave applied successfully.")
-                        
                         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                             showToast = false
                             dismiss()
                         }
                     } else {
+                        showToast = true
                         ToastManager.shared.show(message: model.message ?? "Something went wrong.")
-                        print("API responded with failure: \(model)")
+
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                            showToast = false
+                        }
                     }
                 case .failure(let error):
                     ToastManager.shared.show(message: "Enter Correct ID")
@@ -226,7 +270,7 @@ struct ApplyLeaveView: View {
             apiendpoint: Constant.wfhomeRequest,
             method: .post,
             param: dict,
-            model: SideBarApi.self
+            model: GetSuccessMessage.self
         ) { result in
             DispatchQueue.main.async {
                 switch result {
@@ -234,15 +278,17 @@ struct ApplyLeaveView: View {
                     if model.status == true {
                         showToast = true
                         ToastManager.shared.show(message: model.message ?? "Fetched Successfully")
-                        print("Leave applied successfully.")
-                        
                         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                             showToast = false
                             dismiss()
                         }
                     } else {
+                        showToast = true
                         ToastManager.shared.show(message: model.message ?? "Something went wrong.")
-                        print("API responded with failure: \(model)")
+
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                            showToast = false
+                        }
                     }
                 case .failure(let error):
                     ToastManager.shared.show(message: "Enter Correct ID")
@@ -274,15 +320,17 @@ struct ApplyLeaveView: View {
                     if model.status == true {
                         showToast = true
                         ToastManager.shared.show(message: model.message ?? "Fetched Successfully")
-                        print("Leave applied successfully.")
-                        
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                             showToast = false
                             dismiss()
                         }
                     } else {
+                        showToast = true
                         ToastManager.shared.show(message: model.message ?? "Something went wrong.")
-                        print("API responded with failure: \(model)")
+
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                            showToast = false
+                        }
                     }
                 case .failure(let error):
                     ToastManager.shared.show(message: "Enter Correct ID")
@@ -315,14 +363,17 @@ struct ApplyLeaveView: View {
                         showToast = true
                         ToastManager.shared.show(message: model.message ?? "Fetched Successfully")
                         print("Leave applied successfully.")
-                        
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                             showToast = false
                             dismiss()
                         }
                     } else {
+                        showToast = true
                         ToastManager.shared.show(message: model.message ?? "Something went wrong.")
-                        print("API responded with failure: \(model)")
+
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                            showToast = false
+                        }
                     }
                     
                 case .failure(let error):
@@ -334,8 +385,3 @@ struct ApplyLeaveView: View {
     }
 }
 
-struct ApplyLeaveView_Previews: PreviewProvider {
-    static var previews: some View {
-        ApplyLeaveView()
-    }
-}
