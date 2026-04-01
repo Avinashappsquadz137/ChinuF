@@ -159,7 +159,7 @@ struct SplashView: View {
                                     .environmentObject(notificationHandler)
                             }
                     } else {
-                        MainLoginView()
+                        SelectCompanyView()// MainLoginView()
                             .navigationViewStyle(StackNavigationViewStyle())
                             .environment(\.colorScheme, .light)
                     }

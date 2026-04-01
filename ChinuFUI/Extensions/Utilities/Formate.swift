@@ -60,4 +60,5 @@ extension UIImage {
 }
 extension Color {
     static let maroon = Color(red: 179 / 255, green: 39 / 255, blue: 32 / 255)
+    static let brightOrange = Color(red: 0/255, green: 72/255, blue: 255/255)
 }
