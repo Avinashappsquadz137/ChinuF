@@ -169,7 +169,7 @@ struct SplashView: View {
                             .resizable()
                             .scaledToFill()
                             .ignoresSafeArea()
-                        Image("chinuF_logo")
+                        Image("CTA_ICON")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 200, height: 200)

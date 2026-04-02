@@ -59,6 +59,12 @@ extension UIImage {
     }
 }
 extension Color {
-    static let maroon = Color(red: 179 / 255, green: 39 / 255, blue: 32 / 255)
-    static let brightOrange = Color(red: 0/255, green: 72/255, blue: 255/255)
+    static var maroon: Color {
+        let companyId = UserDefaults.standard.integer(forKey: "SelectedCompanyId")
+        if companyId == 1 {
+            return Color(red: 179 / 255, green: 39 / 255, blue: 32 / 255)
+        } else {
+            return Color(red: 0 / 255, green: 72 / 255, blue: 255 / 255)
+        }
+    }
 }

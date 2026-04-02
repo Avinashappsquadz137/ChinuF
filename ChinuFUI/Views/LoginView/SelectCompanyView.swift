@@ -78,6 +78,7 @@ struct SelectCompanyView: View {
             Image(getCompanyImage(name: company.CompanyName ?? ""))
                 .resizable()
                 .scaledToFit()
+                .cornerRadius(20)
                 .frame(width: 80, height: 80)
             
             Text(company.CompanyName ?? "")
@@ -104,13 +105,18 @@ struct SelectCompanyView: View {
         .onTapGesture {
             withAnimation {
                 selectedCompany = company
+                saveSelectedCompany(company.CompanyId)
             }
         }
     }
+    func saveSelectedCompany(_ companyId: Int) {
+        UserDefaults.standard.set(companyId, forKey: "SelectedCompanyId")
+    }
+
     func getCompanyImage(name: String) -> String {
         switch name.lowercased() {
         case "chinufilms":
-            return "chinuF_logo"
+            return "SanskarLogo"
         case "totalmultimedia":
             return "Total_multi"
         default:

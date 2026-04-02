@@ -170,7 +170,7 @@ struct UserProfileScreenView: View {
                 .compactMap({ $0 as? UIWindowScene })
                 .flatMap({ $0.windows })
                 .first(where: { $0.isKeyWindow }) {
-                window.rootViewController = UIHostingController(rootView: MainLoginView().environment(\.colorScheme, .light))
+                window.rootViewController = UIHostingController(rootView: SelectCompanyView().environment(\.colorScheme, .light))
                 window.makeKeyAndVisible()
             }
         }

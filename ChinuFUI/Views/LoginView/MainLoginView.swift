@@ -7,12 +7,10 @@
 
 import SwiftUI
 
-
-
 struct MainLoginView: View {
     
     var company: Company?
-    @State private var mobile: String = "9627945758"
+    @State private var mobile: String = ""
     @State private var digit1: String = ""
     @State private var digit2: String = ""
     @State private var digit3: String = ""
@@ -30,15 +28,17 @@ struct MainLoginView: View {
     
     var body: some View {
         NavigationStack {
-            ZStack(alignment: .topTrailing) {
+            ZStack(alignment: .top) {
                 Color.white.ignoresSafeArea()
                
-                Image(company?.CompanyId == 1 ? "chinuF_logo" : "TTM_Icon")
-                    .resizable()
-                    .scaledToFill()
-                    .ignoresSafeArea()
+              
                 VStack {
-                    Spacer()
+                    //Spacer()
+                    Image(company?.CompanyId == 1 ? "chinuF_logo" : "TTM_Icon")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(height: 130)
+                                .padding(.top, 16)
                     HStack {
                         Text("Employee")
                             .font(.title)
@@ -124,7 +124,13 @@ struct MainLoginView: View {
                     }
                     Spacer()
                 }
-            
+                
+//                Image(company?.CompanyId == 1 ? "chinuF_logo" : "TTM_Icon")
+//                    .resizable()
+//                    .scaledToFit()
+//                    .frame(height: 130)
+//                    .padding(.top, 16)
+//                    .padding(.trailing, 16)
             }
             .contentShape(Rectangle())
             .onTapGesture {
@@ -135,10 +141,7 @@ struct MainLoginView: View {
         
         .overlay(ToastView())
     }
-    
-    func saveSelectedCompany(_ companyId: Int) {
-        UserDefaults.standard.set(companyId, forKey: "SelectedCompanyId")
-    }
+
 
     // MARK: - OTP TextField
     func otpTextField(text: Binding<String>, next: PinField?, prev: PinField?, tag: PinField) -> some View {
