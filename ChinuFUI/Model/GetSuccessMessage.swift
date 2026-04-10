@@ -78,3 +78,54 @@ enum ErrorValue: Codable {
         }
     }
 }
+struct GetSuccessMessageform : Codable {
+    let status : Bool?
+    let message : String?
+    let data : Bool?
+    let error : [String]?
+
+    enum CodingKeys: String, CodingKey {
+
+        case status = "status"
+        case message = "message"
+        case data = "data"
+        case error = "error"
+    }
+
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        status = try values.decodeIfPresent(Bool.self, forKey: .status)
+        message = try values.decodeIfPresent(String.self, forKey: .message)
+        data = try values.decodeIfPresent(Bool.self, forKey: .data)
+        error = try values.decodeIfPresent([String].self, forKey: .error)
+    }
+
+}
+
+struct UpdateProfileResponse: Decodable {
+    let data: String?
+    let error: [String]?
+    let message: String
+    let status: Bool
+
+    private enum CodingKeys: String, CodingKey {
+        case data, error, message, status
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        data = try? container.decode(String.self, forKey: .data)
+        error = try? container.decode([String].self, forKey: .error)
+        message = (try? container.decode(String.self, forKey: .message)) ?? ""
+
+        if let boolStatus = try? container.decode(Bool.self, forKey: .status) {
+            status = boolStatus
+        } else if let intStatus = try? container.decode(Int.self, forKey: .status) {
+            status = intStatus == 1
+        } else {
+            throw DecodingError.typeMismatch(Bool.self,
+                .init(codingPath: [CodingKeys.status], debugDescription: "Expected Bool or Int"))
+        }
+    }
+}

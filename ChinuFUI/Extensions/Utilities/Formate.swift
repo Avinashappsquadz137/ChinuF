@@ -58,6 +58,39 @@ extension UIImage {
         return newImage
     }
 }
+func isTodayBirthday(_ dateString: String) -> Bool {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "dd-MM-yyyy"
+    guard let birthDate = formatter.date(from: dateString) else {
+        return false
+    }
+    let calendar = Calendar.current
+    let today = Date()
+    let birthComponents = calendar.dateComponents([.day, .month], from: birthDate)
+    let todayComponents = calendar.dateComponents([.day, .month], from: today)
+    return birthComponents.day == todayComponents.day &&
+           birthComponents.month == todayComponents.month
+}
+func shouldShowConfettiToday() -> Bool {
+    let key = "confetti_shown_date"
+    let today = Date().formatted(date: .abbreviated, time: .omitted)
+    
+    let lastShown = UserDefaults.standard.string(forKey: key)
+    
+    if lastShown == today {
+        return false // already shown today
+    } else {
+        UserDefaults.standard.set(today, forKey: key)
+        return true
+    }
+}
+func initials(from name: String?) -> String {
+    guard let name = name else { return "" }
+    let parts = name.split(separator: " ")
+    let first = parts.first?.first.map { String($0) } ?? ""
+    let last = parts.dropFirst().first?.first.map { String($0) } ?? ""
+    return (first + last).uppercased()
+}
 extension Color {
     static var maroon: Color {
         let companyId = UserDefaults.standard.integer(forKey: "SelectedCompanyId")

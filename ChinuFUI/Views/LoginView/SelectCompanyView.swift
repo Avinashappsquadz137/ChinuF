@@ -35,27 +35,19 @@ struct SelectCompanyView: View {
                 Text("Select Company")
                     .font(.title)
                     .fontWeight(.bold)
+                Spacer()
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 15) {
-                        
-                        Spacer(minLength: 0)
-                        
+                        Spacer()
                         ForEach(companyList, id: \.CompanyId) { company in
-                            companyCard(company) // ✅ clean call
+                            companyCard(company)
                         }
                         
-                        Spacer(minLength: 0)
+                        Spacer()
                     }
                     .padding(.horizontal)
                 }
-                
                 Spacer()
-                CustonButton(title: "Submit", backgroundColor: selectedCompany == nil ? Color.gray : .maroon) {
-                    navigateToLogin = true
-                }
-                .disabled(selectedCompany == nil)
-                .padding(.horizontal)
-                
                 NavigationLink(
                     destination: MainLoginView(company: selectedCompany),
                     isActive: $navigateToLogin
@@ -106,6 +98,7 @@ struct SelectCompanyView: View {
             withAnimation {
                 selectedCompany = company
                 saveSelectedCompany(company.CompanyId)
+                navigateToLogin = true
             }
         }
     }

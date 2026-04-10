@@ -33,9 +33,18 @@ class ApiClient: NSObject {
         model: T.Type,
         isMultipart: Bool = false, // Flag for multipart requests
         images: [String: Data] = [:], // Image data dictionary
+        baseUrl : String = "",
         completion: @escaping (Result<T, Error>) -> Void
     ) {
-        let fullUrl = (Constant.BASEURL + apiendpoint).trimmingCharacters(in: .whitespacesAndNewlines)
+        let fullUrl: String
+        if apiendpoint.lowercased().hasPrefix("http") {
+            fullUrl = apiendpoint
+        } else if !baseUrl.isEmpty {
+            fullUrl = (baseUrl + apiendpoint).trimmingCharacters(in: .whitespacesAndNewlines)
+        } else {
+            fullUrl = (Constant.BASEURL + apiendpoint).trimmingCharacters(in: .whitespacesAndNewlines)
+        }
+        
         print("API Endpoint: \(fullUrl)\nParams: \(param)\nMethod: \(method)")
         
         var apiMethod: HTTPMethod = .get

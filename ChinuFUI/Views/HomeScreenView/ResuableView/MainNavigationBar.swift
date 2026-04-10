@@ -12,7 +12,9 @@ struct MainNavigationBar: View {
     var projectName: String = "CF"
     var onSearchTapped: () -> Void = {}
     var onNotificationTapped: () -> Void = {}
-
+    var onQRTapped: () -> Void = {}
+    var notificationCount: Int = 0
+    
     var body: some View {
         HStack(spacing: 16) {
             Image(logoName)
@@ -33,11 +35,22 @@ struct MainNavigationBar: View {
                     .padding(8)
             }
 
-            Button(action: onNotificationTapped) {
-                Image(systemName: "bell")
-                    .foregroundColor(.black)
-                    .font(.title2)
-                    .padding(8)
+            ZStack(alignment: .topTrailing) {
+                Button(action: onNotificationTapped) {
+                    Image(systemName: "bell")
+                        .foregroundColor(.black)
+                        .font(.title2)
+                        .padding(8)
+                }
+                
+                if notificationCount > 0 {
+                    Text("\(notificationCount)")
+                        .font(.caption2)
+                        .foregroundColor(.white)
+                        .padding(5)
+                        .background(Circle().fill(Color.red))
+                        .offset(x :-1,y: -1)
+                }
             }
         }
         .padding(.top , -10)

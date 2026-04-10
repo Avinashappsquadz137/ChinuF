@@ -30,10 +30,12 @@ class ApiRequest {
 }
 
 struct Constant {
-
+    static let EP_BASEURL                  = "https://ep.sanskargroup.in/api/"
+    
     static let BASEURL                     = ApiRequest.Url.serverURL
     static let imageURL                    = "https://ep.sanskargroup.in/uploads/"
     
+    static let changeProfile               = "api_panel/change_profile"
     static let getCompany                  = "api_panel/get_company"
     static let getlogin                    = "api_panel/login_app"
     static let employeeMasterDetail        = "api_panel/employee_master_detail"
