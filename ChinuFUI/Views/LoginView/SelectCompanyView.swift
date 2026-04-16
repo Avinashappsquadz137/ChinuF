@@ -36,16 +36,23 @@ struct SelectCompanyView: View {
                     .font(.title)
                     .fontWeight(.bold)
                 Spacer()
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 15) {
+                if companyList.count == 1 {
+                    HStack {
                         Spacer()
-                        ForEach(companyList, id: \.CompanyId) { company in
-                            companyCard(company)
-                        }
-                        
+                        companyCard(companyList[0])
                         Spacer()
                     }
-                    .padding(.horizontal)
+                } else {
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 15) {
+                            Spacer()
+                            ForEach(companyList, id: \.CompanyId) { company in
+                                companyCard(company)
+                            }
+                            Spacer()
+                        }
+                        .padding(.horizontal)
+                    }
                 }
                 Spacer()
                 NavigationLink(
@@ -118,10 +125,12 @@ struct SelectCompanyView: View {
     }
     
     func fetchCompanyList() {
+        var dict = [String: Any]()
+        dict["device_type"] = "2"
         ApiClient.shared.callmethodMultipart(
             apiendpoint: Constant.getCompany,
-            method: .get,
-            param: [:],
+            method: .post,
+            param: dict,
             model: CompanyModel.self
         ) { result in
             

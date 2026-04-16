@@ -84,7 +84,7 @@ struct MainHomeView: View {
     @State private var scannedText = ""
     @State private var showNotice = false
     @State private var remindLaterTime: Date? = nil
-    
+    @State private var companyID: Int = 0
     @State private var showConfetti = false
     var isBirthday: Bool {
         guard let bday = homeMasterDetailVM.masterDetail?.BDay,
@@ -99,8 +99,8 @@ struct MainHomeView: View {
             NavigationView {
                 VStack(spacing: 0) {
                     MainNavigationBar(
-                        logoName: "sanskar",
-                        projectName: "SEP",
+                       logoName: companyID == 1 ? "chinuF_logo" : "Total_multi",
+                       projectName: companyID == 1 ? "CHINU FILMS" : "TOTAL MULTIMEDIA",
                         onSearchTapped: {
                             navigateSearchScreen = true
                         },
@@ -190,6 +190,11 @@ struct MainHomeView: View {
                     showNotice = true
                 }
             }
+        }
+        .onAppear {
+            companyID = UserDefaultsManager.getCompanyId()
+            print("companyID", companyID)
+            // homeMasterDetailVM.getMasterDetail()
         }
         .navigationBarBackButtonHidden(true)
     }
