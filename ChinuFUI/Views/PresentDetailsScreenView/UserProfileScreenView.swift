@@ -32,16 +32,15 @@ struct UserProfileScreenView: View {
         ZStack {
             VStack(spacing: 16) {
                 EmployeeCard(
-                    imageName: "\(PImg)",
-                    employeeName: name.uppercased(),
-                    employeeCode: empCode,
-                    employeeAttendance: Text(""),
-                    type: .none,
                     onProfileTapped: {
                         isImageFullScreen = true
                     },
                     showEditButton: true,
-                    onEditTapped: nil
+                    onEditTapped: nil,
+                    imageName: "\(PImg)",
+                    employeeName: name.uppercased(),
+                    employeeCode: empCode,
+                    employeeAttendance: Text("")
                 )
                 .padding(.horizontal, 10)
                 ScrollView {
