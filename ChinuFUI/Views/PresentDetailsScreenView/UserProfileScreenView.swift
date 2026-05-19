@@ -17,7 +17,7 @@ struct UserProfileScreenView: View {
     @State private var isImageFullScreen = false
     
     let data: [String: String] = [
-        "Available PL"         : UserDefaultsManager.getPlBalance(),
+//        "Available PL"         : UserDefaultsManager.getPlBalance(),
         "Joining Date"         : UserDefaultsManager.getJoinDate(),
         "Designation"          : UserDefaultsManager.getDesignation(),
         "Department"           : UserDefaultsManager.getDepartment(),
