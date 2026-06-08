@@ -10,7 +10,7 @@ struct NotificationPushHistory : Codable {
     let status : Bool?
     let message : String?
     let data : [PushHistory]?
-    let error : String?
+    let error: [String]?
 
     enum CodingKeys: String, CodingKey {
 
@@ -25,7 +25,7 @@ struct NotificationPushHistory : Codable {
         status = try values.decodeIfPresent(Bool.self, forKey: .status)
         message = try values.decodeIfPresent(String.self, forKey: .message)
         data = try values.decodeIfPresent([PushHistory].self, forKey: .data)
-        error = try values.decodeIfPresent(String.self, forKey: .error)
+        error = try values.decodeIfPresent([String].self, forKey: .error)
     }
 
 }
