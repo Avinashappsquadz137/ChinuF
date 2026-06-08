@@ -9,8 +9,27 @@ import AVFoundation
 import CoreLocation
 import MapKit
 import Alamofire
+import Vision
 // MARK: - Camera View
 struct CameraView: UIViewRepresentable {
+    
+    class Coordinator: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
+        var parent: CameraView
+        
+        init(parent: CameraView) {
+            self.parent = parent
+        }
+        
+        func captureOutput(_ output: AVCaptureOutput,
+                           didOutput sampleBuffer: CMSampleBuffer,
+                           from connection: AVCaptureConnection) {
+            
+            guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
+            
+            parent.detectFace(pixelBuffer: pixelBuffer)
+        }
+    }
+
     class CameraPreviewView: UIView {
         override class var layerClass: AnyClass {
             AVCaptureVideoPreviewLayer.self
@@ -22,15 +41,55 @@ struct CameraView: UIViewRepresentable {
     }
 
     let session: AVCaptureSession
+    var onFaceDetected: (Bool) -> Void
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(parent: self)
+    }
 
     func makeUIView(context: Context) -> CameraPreviewView {
         let view = CameraPreviewView()
         view.previewLayer.session = session
         view.previewLayer.videoGravity = .resizeAspectFill
+        let videoOutput = AVCaptureVideoDataOutput()
+        videoOutput.setSampleBufferDelegate(context.coordinator, queue: DispatchQueue(label: "videoQueue"))
+        
+        if session.canAddOutput(videoOutput) {
+            session.addOutput(videoOutput)
+        }
+        
         return view
     }
 
     func updateUIView(_ uiView: CameraPreviewView, context: Context) {}
+
+    // MARK: - Face Detection
+    private func detectFace(pixelBuffer: CVPixelBuffer) {
+        let request = VNDetectFaceRectanglesRequest { request, _ in
+            DispatchQueue.main.async {
+                guard let results = request.results as? [VNFaceObservation],
+                      let face = results.first else {
+                    self.onFaceDetected(false)
+                    return
+                }
+                let faceRect = face.boundingBox
+                let faceCenterX = faceRect.midX
+                let faceCenterY = faceRect.midY
+                let centerX: CGFloat = 0.5
+                let centerY: CGFloat = 0.5
+                let tolerance: CGFloat = 0.15
+
+                let isCentered =
+                    abs(faceCenterX - centerX) < tolerance &&
+                    abs(faceCenterY - centerY) < tolerance
+
+                self.onFaceDetected(isCentered)
+            }
+        }
+
+        let handler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer, orientation: .up)
+        try? handler.perform([request])
+    }
 }
 
 // MARK: - Location Manager
@@ -90,30 +149,56 @@ struct SelfPunchView: View {
     @State private var output = AVCapturePhotoOutput()
     @State private var remarks = "Remarks: Your last Punch was Out Punch"
     @State private var captureImage: UIImage? = nil
-    @State private var pendingStatus: String? = nil
     @State private var showRemarkAlert = false
     @State private var isUploading = false
     @State private var showToast = false
     @State private var toastMessage = ""
     @State private var photoCaptureHandler: PhotoCaptureHandler? = nil
-
+    @State private var faceDetected = false
+    @State private var progress: CGFloat = 0.0
+    @State private var timer: Timer? = nil
+    @Environment(\.dismiss) var dismiss
+    @StateObject private var homeMasterDetailVM = HomeMasterDetailViewModel()
+    
     var body: some View {
         VStack(spacing: 12) {
-            CameraView(session: session)
-                .frame(height: 250)
-                .cornerRadius(12)
-                .onAppear {
-                    configureCamera()
-                }
+            CameraView(session: session) { detected in
+                faceDetected = detected
+                handleFaceDetection()
+            }
+            .cornerRadius(12)
+            .onAppear {
+                configureCamera()
+            }
+            .overlay(
+                ZStack {
+                    Circle()
+                        .stroke(faceDetected ? Color.green : Color.red, lineWidth: 3)
+                        .frame(width: 300, height: 300)
 
+                    CircularProgressView(progress: progress)
+                    if progress >= 1.0 {
+                        Text("Punch Done ✅")
+                            .foregroundColor(.green)
+                            .bold()
+                            .padding(.top, 320)
+                    } else {
+                        Text(faceDetected ? "Hold Still..." : "Align Face")
+                            .foregroundColor(.white)
+                            .padding(.top, 320)
+                    }
+                }
+            )
+         
+            
             if let coordinate = locationManager.location {
                 Map(coordinateRegion: .constant(MKCoordinateRegion(
                     center: coordinate,
-                    span: MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)
+                    span: MKCoordinateSpan(latitudeDelta: 0.002, longitudeDelta: 0.002)
                 )), annotationItems: [MapMarkerItem(coordinate: coordinate)]) { item in
                     MapMarker(coordinate: item.coordinate, tint: .red)
                 }
-               
+                .frame(height: 150)
                 .cornerRadius(12)
             }
 
@@ -121,48 +206,25 @@ struct SelfPunchView: View {
                 .font(.subheadline)
                 .padding(.horizontal)
                 .multilineTextAlignment(.center)
-
-            Spacer()
-
-            HStack(spacing: 10) {
-                Button(action: {
-                    remarks = "Remarks: Your last Punch was In Punch"
-                    pendingStatus = "0"
-                    capturePhoto()
-                }) {
-                    Label("PUNCH IN", systemImage: "arrow.right.circle.fill")
-                        .padding(10)
-                        .background(isUploading ? Color.gray : Color.green)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                }
-                .disabled(isUploading)
-
-                Button(action: {
-                    remarks = "Remarks: Your last Punch was Out Punch"
-                    pendingStatus = "1"
-                    capturePhoto()
-                }) {
-                    Label("PUNCH OUT", systemImage: "arrow.uturn.left.circle.fill")
-                        .padding(10)
-                        .background(isUploading ? Color.gray : Color.maroon)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                }
-                .disabled(isUploading)
-            }
-
-
             Text(remarks)
-                .font(.footnote)
+                .font(.subheadline)
                 .foregroundColor(.blue)
                 .padding(.top, 4)
         }
         .padding()
         .alert(isPresented: $showRemarkAlert) {
-            Alert(title: Text("PUNCH"),
-                  message: Text("\(remarks)"),
-                  dismissButton: .default(Text("OK")))
+            Alert(
+                title: Text("PUNCH"),
+                message: Text("\(remarks)"),
+                dismissButton: .default(Text("OK")) {
+                    dismiss()
+                }
+            )
+        }
+        .onChange(of: showRemarkAlert) { value in
+            if value {
+                stopAllProcesses()
+            }
         }
         .overlay(ToastView())
         .overlay(
@@ -185,9 +247,66 @@ struct SelfPunchView: View {
             },
             alignment: .top
         )
+        .onAppear {
+            configureCamera()
+            homeMasterDetailVM.getMasterDetail()
+        }
+        .onDisappear {
+            stopCamera()
+        }
+        
 
     }
+    private func stopAllProcesses() {
+        resetTimer()
+        stopCamera()
+        faceDetected = false
+    }
+    private func handleFaceDetection() {
+        if showRemarkAlert { return }
+        if faceDetected {
+            startTimer()
+        } else {
+            resetTimer()
+        }
+    }
+    private func startTimer() {
+        
+        if timer != nil || showRemarkAlert { return }
+        progress = 0.0
 
+        timer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { t in
+            progress = min(progress + 0.05, 1.0)
+
+            if progress >= 1.0 {
+                t.invalidate()
+                timer = nil
+                resetTimer()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    capturePhoto()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        stopCamera()
+                    }
+                    showRemarkAlert = true
+                }
+            }
+        }
+    }
+    private func stopCamera() {
+        if session.isRunning {
+            session.stopRunning()
+        }
+    }
+    private func startCamera() {
+        if !session.isRunning {
+            session.startRunning()
+        }
+    }
+    private func resetTimer() {
+        timer?.invalidate()
+        timer = nil
+        progress = 0.0
+    }
     // MARK: - Configure Camera
     private func configureCamera() {
         session.beginConfiguration()
@@ -197,31 +316,34 @@ struct SelfPunchView: View {
            session.canAddInput(input) {
             session.addInput(input)
         }
-
         if session.canAddOutput(output) {
             session.addOutput(output)
         }
-
         session.commitConfiguration()
         session.startRunning()
     }
 
     // MARK: - Capture and Handle Image
     private func capturePhoto() {
+        guard !isUploading else { return }
         isUploading = true
-
+        let inTime = homeMasterDetailVM.masterDetail?.InTime ?? ""
+        let status: String
+        if inTime.isEmpty  {
+            status = "0"
+            remarks = "Auto Punch In"
+        } else {
+            status = "1"
+            remarks = "Auto Punch Out"
+        }
         let handler = PhotoCaptureHandler { image in
             DispatchQueue.main.async {
                 self.captureImage = image
-                if let status = self.pendingStatus {
-                    self.selfPunchAPI(status: status)
-                    self.pendingStatus = nil
-                }
-                self.photoCaptureHandler = nil // clear strong reference
+                self.selfPunchAPI(status: status)
+                self.photoCaptureHandler = nil
             }
         }
-
-        self.photoCaptureHandler = handler // retain strongly
+        self.photoCaptureHandler = handler
         let settings = AVCapturePhotoSettings()
         output.capturePhoto(with: settings, delegate: handler)
     }
@@ -235,20 +357,20 @@ struct SelfPunchView: View {
             showRemarkAlert = true
             return
         }
-
-        // Resize + convert image
-        guard let resizedImage = image.resizeToWidth(250),
-              let imageData = resizedImage.pngData() else {
+ 
+        var imagesData: [String: Data] = [:]
+        guard let imageData = image.jpegData(compressionQuality: 0.8) else {
             isUploading = false
             showRemarkAlert = true
             return
         }
-
+        imagesData["image"] = imageData
+        
         let empCode = UserDefaultsManager.getEmpCode()
         let location = locationManager.address
         let time = Int(Date().timeIntervalSince1970)
 
-        let url = "\(Constant.BASEURL)/api_panel/selfPunch"
+        let url = "\(Constant.BASEURL)api_panel/selfPunch"
 
         isUploading = true
 
@@ -322,6 +444,23 @@ class PhotoCaptureHandler: NSObject, AVCapturePhotoCaptureDelegate {
             return
         }
         completion(image)
+    }
+}
+struct CircularProgressView: View {
+    var progress: CGFloat
+    
+    var body: some View {
+        ZStack {
+            Circle()
+                .stroke(Color.white.opacity(0.3), lineWidth: 6)
+            
+            Circle()
+                .trim(from: 0, to: progress)
+                .stroke(Color.green, style: StrokeStyle(lineWidth: 6, lineCap: .round))
+                .rotationEffect(.degrees(-90))
+                .animation(.linear, value: progress)
+        }
+        .frame(width: 280, height: 280)
     }
 }
 

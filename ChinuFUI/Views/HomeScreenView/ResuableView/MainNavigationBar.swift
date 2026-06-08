@@ -10,24 +10,34 @@ import SwiftUI
 struct MainNavigationBar: View {
     var logoName: String = "chinuF_logo"
     var projectName: String = "CF"
+    var onDropDown: () -> Void = {}
     var onSearchTapped: () -> Void = {}
     var onNotificationTapped: () -> Void = {}
     var onQRTapped: () -> Void = {}
     var notificationCount: Int = 0
-    
+    var department: String = UserDefaultsManager.getDepartment()
     var body: some View {
         HStack(spacing: 16) {
             Image(logoName)
                 .resizable()
                 .frame(width: 70, height: 70)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
-
-            Text(projectName)
-                .font(.headline)
-                .foregroundColor(.primary)
-
+            
+            Button(action: onDropDown) {
+                HStack(spacing: 5) {
+                    Text(projectName)
+                        .font(.headline)
+                        .foregroundColor(.primary)
+                    if department == "Admin" {
+                        Image(systemName: "chevron.down")
+                            .foregroundColor(.black)
+                            .font(.subheadline)
+                    }
+                }
+                
+            }
             Spacer()
-
+            
             Button(action: onSearchTapped) {
                 Image(systemName: "")
                     .font(.title2)

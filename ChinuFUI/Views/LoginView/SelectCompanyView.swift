@@ -74,13 +74,13 @@ struct SelectCompanyView: View {
         
         VStack(spacing: 10) {
             
-            Image(getCompanyImage(name: company.CompanyName ?? ""))
+            Image(getCompanyImage(name: company.CompanyName))
                 .resizable()
                 .scaledToFit()
                 .cornerRadius(20)
                 .frame(width: 80, height: 80)
             
-            Text(company.CompanyName ?? "")
+            Text(company.CompanyName)
                 .font(.subheadline)
                 .foregroundColor(.black)
                 .multilineTextAlignment(.center)

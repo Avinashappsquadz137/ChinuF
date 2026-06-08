@@ -15,10 +15,12 @@ struct MainHomeView: View {
     @State private var name: String = UserDefaultsManager.getName()
     @State private var empCode: String = UserDefaultsManager.getEmpCode()
     @State private var PImg: String = UserDefaultsManager.getProfileImage()
+//    @State private var department: String = UserDefaultsManager.getDepartment()
     @StateObject private var calendarViewModel = MonthlyCalendarViewModel()
     @StateObject private var homeMasterDetailVM = HomeMasterDetailViewModel()
     @State private var navigateNotification = false
     @State private var navigateSearchScreen = false
+    @State private var navigateonDropDown = false
     @State private var navigateQRScreen = false
     @State private var navigateToProfile = false
     @State private var notificationCount: Int = 0
@@ -27,6 +29,7 @@ struct MainHomeView: View {
     @State private var remindLaterTime: Date? = nil
     @State private var companyID: Int = 0
     @State private var showConfetti = false
+    @State private var companyList: [Company] = []
     var isBirthday: Bool {
         guard let bday = homeMasterDetailVM.masterDetail?.BDay,
               !bday.isEmpty else {
@@ -39,9 +42,17 @@ struct MainHomeView: View {
         ZStack {
             NavigationView {
                 VStack(spacing: 0) {
+                   
                     MainNavigationBar(
                        logoName: companyID == 1 ? "chinuF_logo" : "Total_multi",
                        projectName: companyID == 1 ? "CHINU FILMS" : "TOTAL MULTIMEDIA",
+                       onDropDown: UserDefaultsManager.getDepartment() == "Admin"
+                         ? {
+                             navigateonDropDown = true
+                         }
+                         : {
+                             
+                         },
                         onSearchTapped: {
                             navigateSearchScreen = true
                         },
@@ -102,11 +113,38 @@ struct MainHomeView: View {
                     
                 }
             }
-           
+            if navigateonDropDown {
+                VStack {
+                    HStack {
+                        DropdownMenuView(
+                            onChinuTap: {
+                                navigateonDropDown = false
+                                saveSelectedCompany(1)
+                                companyID = 1
+                               
+                            },
             
-        }
+                            onTotalTap: {
+                                navigateonDropDown = false
+                                saveSelectedCompany(2)
+                                companyID = 2
+                            }
+                        )
+                        .padding(.leading, 70)
+                        .padding(.top, 40)
+                        
+                        Spacer()
+                    }
+                    
+                    Spacer()
+                }
+                .transition(.opacity)
+                .zIndex(1)
         
-        .onAppear {
+            }
+
+           }
+            .onAppear {
             homeMasterDetailVM.getMasterDetail()
             if isBirthday && shouldShowConfettiToday() {
                 showConfetti = true
@@ -133,10 +171,14 @@ struct MainHomeView: View {
             }
         }
         .onAppear {
-            companyID = UserDefaultsManager.getCompanyId()
+            companyID = UserDefaults.standard.integer(forKey: "SelectedCompanyId")
             print("companyID", companyID)
             // homeMasterDetailVM.getMasterDetail()
         }
         .navigationBarBackButtonHidden(true)
     }
+    func saveSelectedCompany(_ companyId: Int) {
+        UserDefaults.standard.set(companyId, forKey: "SelectedCompanyId")
+    }
+  
 }
